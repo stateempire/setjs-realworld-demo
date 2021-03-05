@@ -1,0 +1,70 @@
+<div class="article-page" data-template="site/view">
+  <div class="banner">
+    <div class="container">
+      <h1>{article.title}</h1>
+      <div data-slot='{"t": "site/view/article-meta"}'></div>
+    </div>
+  </div>
+  <div class="container page">
+    <div class="row article-content">
+      <div class="col-md-12" data-bind="article.body:marked"></div>
+    </div>
+    <hr/>
+    <div class="article-actions" data-slot='{"t": "site/view/article-meta"}'></div>
+    <div class="row">
+      <div class="col-xs-12 col-md-8 offset-md-2">
+        <form class="card comment-form" data-if="@user" data-act="form" data-func="saveComment">
+          <ul class="error-messages" data-name="errors" data-list='{"prop": "errors"}'>
+            <li>{key} <span data-bind="val:commaList:t"></span></li>
+          </ul>
+          <div class="card-block"><textarea class="form-control" placeholder="Write a comment..." rows="3" name="body"></textarea></div>
+          <div class="card-footer"><img class="comment-author-img" data-bind="@user.image:str,`https://static.productionready.io/images/smiley-cyrus.jpg`|attr,src" /><button class="btn btn-sm btn-primary" type="submit">Post Comment</button></div>
+        </form>
+        <p data-if="@user|not"><a data-href="login">Sign in</a> or <a data-href="signup">sign up</a> to add comments on this article.</p>
+        <div class="comments" data-name="comments" data-list='{"prop": "comments", "vars":{"v": "comment"}}'>
+          <div class="card">
+            <div class="card-block">
+              <p class="card-text">{o:comment.body}</p>
+            </div>
+            <div class="card-footer">
+              <a class="comment-author" data-href="profile/{comment.author.username}">
+                <img class="comment-author-img" data-src="{comment.author.image}"/>
+              </a>
+              <a class="comment-author" data-href="profile/{comment.author.username}">{comment.author.username}</a>
+              <span class="date-posted" data-bind="comment.createdAt:moment"></span>
+              <span class="mod-options" data-if="comment.author.username|equal,{@user.username}" data-act="click" data-func="deleteComment">
+                <i class="ion-trash-a"></i>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="article-meta" data-template="site/view/article-meta">
+  <a data-href="profile/@{article.author.username}">
+    <img data-bind="article.author.image:str,`https://static.productionready.io/images/smiley-cyrus.jpg`|attr,src"/>
+  </a>
+  <div class="info">
+    <a class="author" data-href="profile/@{article.author.username}">{article.author.username}</a>
+    <span class="date" data-bind="article.createdAt:moment"></span>
+  </div>
+  <span data-if="article.author.username|equal,{@user.username}">
+    <a class="btn btn-sm btn-outline-secondary" data-href="editor/{article.slug}">
+      <i class="ion-edit"><span>Edit Article</span></i>
+    </a>
+    <span>&nbsp;</span>
+    <button class="btn btn-outline-danger btn-sm" data-act='click' data-func='deleteArticle'>
+      <i class="ion-trash-a"><span>Delete Article</span></i>
+    </button>
+  </span>
+  <span data-if="article.author|canFollow">
+    <button class="btn btn-sm btn-outline-secondary" data-act="click" data-func="toggleFollow">
+      <i class="ion-plus-round"><span data-watch="article.author.following:either,Unfollow,Follow|t"></span>&nbsp;{article.author.username}</i>
+    </button>
+    <span>&nbsp;</span>
+    <button class="btn btn-sm btn-outline-primary" data-act="click" data-func="toggleFavorite" data-watch="article.favorited:toggleClass,btn-primary:not|toggleClass,btn-outline-primary"><i class="ion-heart"><span data-watch="article.favorited:either,Unfavorite,Favorite|t"></span> Post</i><span class="counter" data-watch="article.favoritesCount|wrap, (,)|t"></span></button>
+  </span>
+</div>

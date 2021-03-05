@@ -1,0 +1,36 @@
+<div class="profile-page" data-template="site/profile">
+  <div class="user-info">
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12 col-md-10 offset-md-1"><img class="user-img" data-src="{o:profile.image}" />
+          <h4>{profile.username}</h4>
+          <p>{o:profile.bio}</p>
+          <button class="btn btn-sm btn-outline-secondary action-btn" data-act="click" data-func="toggleFollow" data-if="profile|canFollow">
+              <i class="ion-plus-round"><span data-bind="profile.following:either,Unfollow,Follow|t"></span>&nbsp;{profile.username}</i>
+          </button>
+          <a class="btn btn-sm btn-outline-secondary action-btn" data-if="profile.username|equal,{@user.username}" data-href="settings">
+            <i class="ion-gear-a">Edit Profile Settings</i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12 col-md-10 offset-md-1">
+        <div class="articles-toggle">
+          <ul class="nav nav-pills outline-active">
+            <li class="nav-item"><a class="nav-link" data-href="profile/@{profile.username}" data-bind="@route.id:not|toggleClass,active">My Articles</a></li>
+            <li class="nav-item"><a class="nav-link" data-href="profile/@{profile.username}/favorited" data-bind="@route.id:bool|toggleClass,active">Favorited Articles</a></li>
+          </ul>
+        </div>
+        <div class="articles" data-list='{"prop": "articles", "t": "common/article-preview", "alt": "common/article-preview/empty", "vars": {"v": "article"}}'></div>
+        <nav>
+          <ul class="pagination" data-list='{"prop": "pages", "vars": {"v": "page"}}'>
+            <li class="page-item {o:page.cls}"><a class="page-link" data-href="{@route.path}{page.link}">{page.index}</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+</div>

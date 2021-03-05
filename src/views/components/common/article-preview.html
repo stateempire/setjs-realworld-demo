@@ -1,0 +1,24 @@
+<div class="article-preview" data-template="common/article-preview">
+  <div class="article-meta"><a data-href="profile/@{article.author.username}"><img data-src="{o:article.author.image}"/></a>
+    <div class="info">
+      <a class="author" data-href="profile/@{article.author.username}">{article.author.username}</a>
+      <span class="date" data-bind="article.createdAt:moment"></span>
+    </div>
+    <button class="btn btn-sm pull-xs-right" data-if="@user" data-act="click" data-func="toggleFavorite" data-watch="article.favorited:toggleClass,btn-primary:not|toggleClass,btn-outline-primary">
+      <i class="ion-heart" data-watch="article.favoritesCount"></i>
+    </button>
+  </div>
+  <a class="preview-link" data-href="articles/{article.slug}">
+    <h1>{article.title}</h1>
+    <p>{article.description}</p>
+      <span>Read more...</span>
+    </a>
+  <ul class="tag-list" data-list='{"prop": "article.tagList", "vars": {"v": "tag"}}'>
+    <li class="tag-default tag-pill tag-outline">
+      <a data-href="?tag={tag}">{tag}</a>
+    </li>
+  </ul>
+</div>
+<div data-template="common/article-preview/empty">
+  <div class="article-preview">No articles are here... yet.</div>
+</div>

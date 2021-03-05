@@ -1,0 +1,12 @@
+name: SetJS post-css starter kit
+version: 1.0.0
+aws_vars: export $(cat .aws-vars | xargs)
+loader: progress-bar
+api_url: https://conduit.productionready.io/api/
+local:
+  environment: local
+  site_port: 60002
+development:
+  environment: development
+master:
+  environment: production

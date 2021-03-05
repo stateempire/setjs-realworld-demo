@@ -1,0 +1,16 @@
+export default {
+  init: 1,
+  wheel: 2,
+  user: 3,
+  scroll: 4,
+  resize: 5,
+  lang: 6,
+  gdpr: 7,
+  route: 8,
+  view: 9,
+  loadStart: 10,
+  preload: 11,
+  loading: 12,
+  loaded: 13,
+  unload: 14,
+};

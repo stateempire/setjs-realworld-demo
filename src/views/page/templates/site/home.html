@@ -1,0 +1,35 @@
+<div class="home-page" data-template="site/home">
+  <div class="banner">
+    <div class="container">
+      <h1 class="logo-font">conduit</h1>
+      <p>A place to share your knowledge.</p>
+    </div>
+  </div>
+  <div class="container page">
+    <div class="row">
+      <div class="col-md-9">
+        <div class="feed-toggle">
+          <ul class="nav nav-pills outline-active">
+            <li class="nav-item"><a class="nav-link" data-href="my-feed" data-bind="tab:equal,my-feed|toggleClass,active">Your Feed</a></li>
+            <li class="nav-item"><a class="nav-link" data-href="/" data-bind="tab:equal,home|toggleClass,active">Global Feed</a></li>
+            <li class="nav-item" data-if="tag"><a class="nav-link active" data-href="?tag={tag}">#{tag}</a></li>
+          </ul>
+        </div>
+        <div class="articles" data-list='{"prop": "articles", "t": "common/article-preview", "alt": "common/article-preview/empty", "vars": {"v": "article"}}'></div>
+        <nav>
+        <ul class="pagination" data-list='{"prop": "pages", "vars": {"v": "page"}}'>
+            <li class="page-item {o:page.cls}"><a class="page-link" data-href="{o:@route.pageId}{page.link}">{page.index}</a></li>
+        </ul>
+        </nav>
+      </div>
+      <div class="col-md-3">
+        <div class="sidebar">
+          <p>Popular Tags</p>
+          <div class="tag-list" data-list='{"prop": "@tags", "vars": {"v": "tag"}}'>
+            <a class="tag-pill tag-default" data-href="?tag={tag}">{tag}</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

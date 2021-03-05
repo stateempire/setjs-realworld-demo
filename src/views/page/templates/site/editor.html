@@ -1,0 +1,32 @@
+<div class="editor-page" data-template="site/editor">
+  <div class="container page">
+    <div class="row">
+      <div class="col-md-10 offset-md-1 col-xs-12">
+        <ul class="error-messages" data-name="errors" data-list='{"prop": "errors"}'>
+          <li>{key} <span data-bind="val:commaList:t"></span></li>
+        </ul>
+        <form data-act="form">
+          <input type="hidden" name="slug" value="{o:article.slug}" />
+          <fieldset>
+            <fieldset class="form-group">
+              <input class="form-control form-control-lg" type="text" name="title" placeholder="Article Title" value="{o:article.title}" />
+            </fieldset>
+            <fieldset class="form-group">
+              <input class="form-control" type="text" name="description" placeholder="What's this article about?" value="{o:article.description}" />
+            </fieldset>
+            <fieldset class="form-group">
+              <textarea class="form-control" rows="8" name="body" placeholder="Write your article (in markdown)">{o:article.body}</textarea>
+            </fieldset>
+            <fieldset class="form-group">
+              <input class="form-control" type="text" placeholder="Enter tags" data-act="keypress" data-func="addTag" />
+              <div class="tag-list" data-name="tagList" data-list='{"prop": "article.tagList"}'>
+                <span class="tag-default tag-pill" data-act="click" data-func="removeTag"><i class="ion-close-round"></i><span>{val}</span></span>
+              </div>
+            </fieldset>
+            <button class="btn btn-lg pull-xs-right btn-primary" type="submit">Publish Article</button>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

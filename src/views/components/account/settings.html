@@ -1,0 +1,33 @@
+<div class="settings-page" data-template="account/settings">
+  <div class="container page">
+    <div class="row">
+      <div class="col-md-6 offset-md-3 col-xs-12">
+        <h1 class="text-xs-center">Your Settings</h1>
+        <ul class="error-messages" data-name="errors" data-list='{"prop": "errors"}'>
+          <li>{key}<span data-bind="val:commaList:t"></span></li>
+        </ul>
+        <form data-act="form">
+          <fieldset>
+            <fieldset class="form-group">
+              <input class="form-control" type="text" name="image" placeholder="URL of profile picture" value="{o:user.image}" />
+            </fieldset>
+            <fieldset class="form-group">
+              <input class="form-control form-control-lg" type="text" name="username" placeholder="Your Name" value="{o:user.username}" />
+            </fieldset>
+            <fieldset class="form-group">
+              <textarea class="form-control form-control-lg" rows="8" name="bio" placeholder="Short bio about you">{o:user.bio}</textarea>
+            </fieldset>
+            <fieldset class="form-group">
+              <input class="form-control form-control-lg" type="text" name="email" placeholder="Email" value="{o:user.email}" />
+            </fieldset>
+            <fieldset class="form-group"><input class="form-control form-control-lg" type="password" name="password" placeholder="Password" />
+            </fieldset>
+            <button class="btn btn-lg btn-primary pull-xs-right" type="submit">Update Settings</button>
+          </fieldset>
+        </form>
+        <hr/>
+        <button class="btn btn-outline-danger" data-act="click" data-func="logout">Or click here to logout.</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,12 @@
+<nav class="navbar navbar-light" data-template="common/navigation">
+  <div class="container"><a class="navbar-brand" data-href="/">conduit</a>
+    <ul class="nav navbar-nav pull-xs-right">
+      <li class="nav-item"><a class="nav-link active" data-href="/">Home</a></li>
+      <li class="nav-item"><a class="nav-link" data-href="editor"><i class="ion-compose">New Post</i></a></li>
+      <li class="nav-item"><a class="nav-link" data-href="settings"><i class="ion-gear-a">Settings</i></a></li>
+      <li class="nav-item" data-bind="#:showTo,unknown"><a class="nav-link" data-href="login">Sign in</a></li>
+      <li class="nav-item" data-bind="#:showTo,unknown"><a class="nav-link" data-href="signup">Sign up</a></li>
+      <li class="nav-item" data-bind="#:hideFrom,unknown"><a class="nav-link" data-bind="@user.username:t:prefix,profile/@|attr,data-href"></a></li>
+    </ul>
+  </div>
+</nav>
