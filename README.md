@@ -1,19 +1,20 @@
-<a href="https://setjs.org"><img src="http://dev.setjs.org/images/social/github.png" width="200"></a>
-<br />
+# ![RealWorld Example App](https://stateempire.com/images/common/pwa-192.png)
 
-## SETjs – A pragmatic frontend framework for the Web
-The easiest and fastest way to create your new Web project.
+> ### [SetJS](https://github.com/stateempire) codebase containing real world examples (CRUD, auth, advanced patterns, etc) that adheres to the [RealWorld](https://github.com/gothinkster/realworld) spec and API.
 
-_This is the official SETjs postcss starter kit._
 
-## Documentation
+### [Demo](http://setjs-realworld-demo.setjs.org)&nbsp;&nbsp;&nbsp;&nbsp;[RealWorld](https://github.com/gothinkster/realworld)
 
-You can find the SETjs documentation [on our website](https://setjs.org/docs). And check out our [Getting Started](https://setjs.org/docs/getting-started) page for details on trying SETjs yourself.
 
-## Questions
+This codebase was created to demonstrate a fully fledged fullstack application built with **[SetJS]** including CRUD operations, authentication, routing, pagination, and more.
 
-Have any Questions? Please [get in touch](https://stateempire.com/contact), we love to talk about this, or subscribe to our [newsletter](https://setjs.org) above to keep up with what we're thinking, saying, and doing with SETjs.
+We've gone to great lengths to adhere to the **[SetJS]** community styleguides & best practices.
 
-## Credits
+For more information on how to this works with other frontends/backends, head over to the [RealWorld](https://github.com/gothinkster/realworld) repo.
 
-Developed by the team at [State Empire](https://stateempire.com) as an experiment in frustration. State Empire is an independent design and development studio in Melbourne Australia.
+
+# Getting started
+```bash
+npm i
+npm start
+```
