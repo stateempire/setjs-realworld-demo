@@ -10,12 +10,11 @@ export default {
     var username = opts.route.slug.replace(/^@/, '');
     var query = makeQs(opts.route.id == 'favorited' ? {favorited: username} : {author: username});
     batchCall(opts)
-    .add(api.getProfile, {username}, 'profileRes')
+    .add(api.getProfile, {username}, 'profile', 'profile')
     .add(api.getArticles, {query}, 'articlesRes')
     .go();
   },
-  comp: function(opts, {profileRes, articlesRes}) {
-    var profile = profileRes.profile;
+  comp: function(opts, {profile, articlesRes}) {
     var pageData = {
       profile,
       articles: articlesRes.articles,
