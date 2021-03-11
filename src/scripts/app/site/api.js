@@ -1,50 +1,18 @@
-import {addApis, ajaxCall} from 'core/api-helper.js';
+import {addApis, ajaxCall, getById, dataFunc, saveById, deleteById, jsonFunc} from 'core/api-helper.js';
 
 addApis({
-  getProfile,
-  getTags,
-  getArticle,
-  saveArticle,
-  deleteArticle,
-  getArticles,
+  getProfile: getById('profiles', 'username'),
+  getTags: dataFunc('tags'),
+  getArticle: getById('articles', 'slug'),
+  saveArticle: saveById(({data}) => 'articles' + (data.article.slug ? '/' + data.article.slug : ''), 'data.article.slug'),
+  deleteArticle: deleteById('articles', 'slug'),
+  getArticles: dataFunc(opts =>  'articles' + (opts.feed ? '/feed' : '') + `?${opts.query}`),
+  getComments: dataFunc(opts =>  'articles/' + opts.slug + '/comments'),
+  saveComment: jsonFunc(opts =>  'articles/' + opts.slug + '/comments'),
+  deleteComment: jsonFunc(opts =>  'articles/' + opts.slug + '/comments/' + opts.commentId, 'DELETE'),
   toggleFollow,
   toggleFavorite,
-  getComments,
-  saveComment,
-  deleteComment,
 });
-
-function getProfile(opts) {
-  ajaxCall($.extend({}, opts, {type: 'GET', relativeUrl: 'profiles/' + opts.username}));
-}
-
-function getTags(opts) {
-  ajaxCall($.extend({type: 'GET'}, opts, {relativeUrl: 'tags'}));
-}
-
-function getArticle(opts) {
-  ajaxCall($.extend({type: 'GET'}, opts, {relativeUrl: 'articles/' + opts.slug}));
-}
-
-function saveArticle(opts) {
-  if (opts.data.article.slug) {
-    ajaxCall($.extend({isJSON: 1}, opts, {relativeUrl: 'articles/' + opts.data.article.slug, type: 'PUT'}));
-  } else {
-    ajaxCall($.extend({isJSON: 1}, opts, {relativeUrl: 'articles'}));
-  }
-}
-
-function deleteArticle(opts) {
-  ajaxCall($.extend({}, opts, {relativeUrl: 'articles/' + opts.slug, type: 'DELETE'}));
-}
-
-function getArticles(opts) {
-  var url = 'articles';
-  if (opts.feed) {
-    url += '/feed';
-  }
-  ajaxCall($.extend({}, opts, {type: 'GET', relativeUrl: url + `?${opts.query}`}));
-}
 
 function toggleFollow(opts) {
   var user = opts.user;
@@ -58,16 +26,4 @@ function toggleFavorite(opts) {
   var type = article.favorited ? 'DELETE' : '';
   article.favorited = !article.favorited;
   ajaxCall($.extend({}, opts, {type, relativeUrl: `articles/${article.slug}/favorite`}));
-}
-
-function getComments(opts) {
-  ajaxCall($.extend({type: 'GET'}, opts, {relativeUrl: 'articles/' + opts.slug + '/comments'}));
-}
-
-function saveComment(opts) {
-  ajaxCall($.extend({isJSON: 1}, opts, {relativeUrl: 'articles/' + opts.slug + '/comments'}));
-}
-
-function deleteComment(opts) {
-  ajaxCall($.extend({}, opts, {relativeUrl: 'articles/' + opts.slug + '/comments/' + opts.commentId, type: 'DELETE'}));
 }

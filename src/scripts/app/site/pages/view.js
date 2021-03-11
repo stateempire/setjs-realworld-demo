@@ -1,5 +1,4 @@
 import getComp from 'setjs/template/component.js';
-import eventManager, {eventTypes} from 'setjs/kernel/event-manager.js';
 import {api} from 'core/api-helper.js';
 import {batchCall} from 'setjs/utility/calls.js';
 

@@ -51,7 +51,7 @@ function handleEvent(args, func) {
       comp.busy = true;
       $button.prop('disabled', true);
       $el.addClass('loading').removeClass('error success');
-      args.error = function(errors) {
+      args.error = function(status, errors) {
         comp.data.errors = errors;
         comp.renderList('errors');
         args.end('error');
