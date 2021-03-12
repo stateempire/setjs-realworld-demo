@@ -3,7 +3,7 @@ client: set
 project: realworld
 version: 1.0.0
 email: help@stateempire.com
-aws_vars: export $(cat .aws-vars | xargs)
+# aws_vars: export $(cat .aws-vars | xargs)
 loader: progress-bar
 api_url: https://conduit.productionready.io/api/
 local:

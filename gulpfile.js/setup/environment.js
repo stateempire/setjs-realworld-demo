@@ -1,7 +1,7 @@
 var local = {name: 'local', mode: 'development', devtool: 'source-map'};
 var development = {name: 'development', mode: 'development'};
 var staging = {name: 'staging', mode: 'production'};
-var production = {name: 'production', mode: 'production'};
+var production = {name: 'master', mode: 'production'};
 
 var env = {
   local: local,
