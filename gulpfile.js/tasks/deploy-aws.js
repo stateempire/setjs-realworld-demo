@@ -90,10 +90,13 @@ async function deploy_aws(cb) {
   --s3-bucket ${client}-s3-as2-${env}-${project}
   --s3-prefix cloudformation/`);
 
-  await runCommand(`aws s3 sync dist/ s3://${client}-s3-as2-${env}-${project}-static/www/ --cache-control max-age=${cache_control_max_age}`);
+  await runCommand(`aws s3 sync dist/ s3://${client}-s3-as2-${env}-${project}-static/www/
+  --cache-control max-age=${cache_control_max_age}`);
 
   if (distribution_id) {
-    await runCommand(`aws cloudfront create-invalidation --distribution-id ${distribution_id} --paths "/*"`);
+    await runCommand(`aws cloudfront create-invalidation
+    --distribution-id ${distribution_id}
+    --paths "/*"`);
   }
   cb();
 }

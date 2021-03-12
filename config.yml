@@ -1,5 +1,8 @@
-name: SetJS post-css starter kit
+name: setjs-org real world
+client: set
+project: realworld
 version: 1.0.0
+email: help@stateempire.com
 aws_vars: export $(cat .aws-vars | xargs)
 loader: progress-bar
 api_url: https://conduit.productionready.io/api/
@@ -10,3 +13,8 @@ development:
   environment: development
 master:
   environment: production
+  domain: realworld.setjs.org
+  subdomain: false
+  sslcert: arn:aws:acm:us-east-1:423611532717:certificate/cf0a261a-91f5-4131-b937-689af2de4ac9
+  cache_control_max_age: 2592000
+  server_edge: false

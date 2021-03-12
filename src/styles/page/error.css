@@ -1,0 +1,62 @@
+#error {
+  height: 100vh;
+
+  nav,
+  footer {
+    display: none;
+  }
+
+  header {
+    display: flex;
+    flex-direction: column;
+
+    width: 100vw;
+    height: 100vh;
+
+    align-items: center;
+    justify-content: center;
+  }
+
+  summary {
+    text-align: left;
+    width: 80%;
+
+    max-width: 404px;
+  }
+
+  a,
+  p,
+  h2,
+  h3,
+  h4 {
+    color: #e91e63;
+    transition: all 0s;
+  }
+
+  h3 {
+    position: relative;
+
+    &:before {
+      position: absolute;
+      top: 0;
+
+      left: -40px;
+    }
+
+    &.shrug {
+      &:before {
+        content: '🤷‍♀️';
+      }
+    }
+
+    &.error {
+      &:before {
+        content: '💣';
+      }
+    }
+  }
+
+  a {
+    text-decoration: underline;
+  }
+}
