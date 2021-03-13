@@ -26,6 +26,6 @@ exports.images = images;
 exports.views = views;
 exports.scripts = scripts;
 exports.dist = dist;
-exports.styles = gulp.series(views, styles);
+exports.styles = styles;
 exports.deploy_aws = gulp.series(dist, deploy_aws);
 exports.default = gulp.series(dist, serve);

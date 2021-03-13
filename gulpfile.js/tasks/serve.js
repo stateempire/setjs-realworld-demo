@@ -22,7 +22,7 @@ function serve(cb) {
       middleware: [historyApiFb()],
     },
   });
-  gulp.watch(paths.src.views + '/**/*', gulp.series(views, styles, reload));
+  gulp.watch(paths.src.views + '/**/*', gulp.series(views, reload));
   gulp.watch(paths.src.scripts + '/**/*', gulp.series(scripts, reload));
   gulp.watch(paths.src.styles + '/**/*', styles);
   gulp.watch(paths.blob.images, gulp.series(images, reload));
