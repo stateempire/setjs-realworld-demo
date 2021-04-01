@@ -11,6 +11,9 @@ addFuncs({
     var user = api.getUser();
     return user && user.username != author.username;
   },
+  toDateString: function(createdAt, {$el}) {
+    $el.text(new Date(createdAt).toDateString());
+  },
 });
 
 addAction('deleteArticle', function(opts){

@@ -31,7 +31,7 @@
                 <img class="comment-author-img" data-src="{comment.author.image}"/>
               </a>
               <a class="comment-author" data-href="profile/{comment.author.username}">{comment.author.username}</a>
-              <span class="date-posted" data-bind="comment.createdAt:moment"></span>
+              <span class="date-posted" data-bind="comment.createdAt:toDateString"></span>
               <span class="mod-options" data-if="comment.author.username|equal,{@user.username}" data-act="click" data-func="deleteComment">
                 <i class="ion-trash-a"></i>
               </span>
@@ -49,7 +49,7 @@
   </a>
   <div class="info">
     <a class="author" data-href="profile/@{article.author.username}">{article.author.username}</a>
-    <span class="date" data-bind="article.createdAt:moment"></span>
+    <span class="date" data-bind="article.createdAt:toDateString"></span>
   </div>
   <span data-if="article.author.username|equal,{@user.username}">
     <a class="btn btn-sm btn-outline-secondary" data-href="editor/{article.slug}">

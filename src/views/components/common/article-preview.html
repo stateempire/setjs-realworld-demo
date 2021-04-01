@@ -2,7 +2,7 @@
   <div class="article-meta"><a data-href="profile/@{article.author.username}"><img data-src="{o:article.author.image}"/></a>
     <div class="info">
       <a class="author" data-href="profile/@{article.author.username}">{article.author.username}</a>
-      <span class="date" data-bind="article.createdAt:moment"></span>
+      <span class="date" data-bind="article.createdAt:toDateString"></span>
     </div>
     <button class="btn btn-sm pull-xs-right" data-if="@user" data-act="click" data-func="toggleFavorite" data-watch="article.favorited:toggleClass,btn-primary:not|toggleClass,btn-outline-primary">
       <i class="ion-heart" data-watch="article.favoritesCount"></i>

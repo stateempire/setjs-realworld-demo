@@ -46,8 +46,7 @@
     "webpack-stream": "^6.1.2"
   },
   "dependencies": {
-    "marked": "^2.0.1",
-    "moment": "^2.29.1"
+    "marked": "^2.0.1"
   },
   "browser": {},
   "browserslist": [
