@@ -13,8 +13,10 @@ var wpConfig = {
     libraryTarget: 'window',
   },
   plugins: [
-    // https://github.com/moment/moment/issues/2517#issuecomment-393704231
-    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+    new webpack.IgnorePlugin({
+      resourceRegExp: /^\.\/locale$/,
+      contextRegExp: /moment$/,
+    }),
   ],
   devtool: env.current.devtool || false, // https://webpack.js.org/configuration/devtool/
   mode: env.current.mode,// https://webpack.js.org/concepts/mode/
@@ -56,4 +58,4 @@ function compile() {
     .pipe(gulp.dest(paths.dest.scripts));
 }
 
-exports.scripts = gulp.series(lint, compile);
+exports.scripts = gulp.parallel(lint, compile);
