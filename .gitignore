@@ -14,4 +14,5 @@ Thumbs.db
 
 dist/
 .aws-vars
+aws-temp/
 _local.yml
