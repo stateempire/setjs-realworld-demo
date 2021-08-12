@@ -101,7 +101,7 @@ function testArray(obj, otherwise) {
   }
 }
 
-function loadJSCSS(urls, success, errorCb) {
+export function loadJSCSS(urls, success, errorCb) {
   var done = 0;
   if (testArray(urls, success)) {
     urls.forEach(function(url) {
@@ -177,7 +177,11 @@ export function loadImages(list, done) {
         count++;
         result[item.id || url] = code ? {item, img: data} : {item, errors: data};
         if (count == urls.length) {
-          done(result);
+          let arr = [];
+          $.each(result, function(key, item) {
+            item.img && arr.push(item.img);
+          });
+          done(result, arr);
         }
       }
     });

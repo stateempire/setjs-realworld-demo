@@ -9,6 +9,7 @@ $.fn.accordion = function(opts) {
       $item.data('accord', 1).find('.details').css({height: 0});
       $item.find('.title').on('click', function() {
         toggle($item);
+        return false;
       });
     }
   });
@@ -48,6 +49,7 @@ $.fn.accordion = function(opts) {
           }, aimationTime);
         }
         $prev.removeClass('open').find('.details').animate({height: 0}, aimationTime);
+        opts.close && opts.close($prev, $prev.index());
       }
       $item.addClass('open');
       $details.animate({height: innerHeight}, aimationTime, function() {

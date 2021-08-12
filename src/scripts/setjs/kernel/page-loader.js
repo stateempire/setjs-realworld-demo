@@ -1,6 +1,5 @@
 import loader from 'Loader';
 import getComp from 'setjs/template/component.js';
-import setup from 'config/setup.js';
 import {viewUpdate} from 'config/app-config.js';
 import {testRole} from 'setjs/kernel/roles.js';
 import storage, {storageTypes} from 'setjs/kernel/storage.js';
@@ -16,7 +15,7 @@ function setLoginManager(_loginManager) {
 }
 
 function handleAuthError(type, cb) {
-  return loginManager.handleAuthError(type, cb);
+  return loginManager && loginManager.handleAuthError(type, cb);
 }
 
 function showError(data, compName='common/error') {
@@ -53,7 +52,7 @@ function handleRoute(route) {
   if (!page) {
     return notFound();
   }
-  if (!setup.ssr() && oldPage == page && 'handleRoute' in oldPage && !oldPage.handleRoute(pageData, route)) {
+  if (oldPage == page && 'handleRoute' in oldPage && !oldPage.handleRoute(pageData, route)) {
     viewUpdate();
   } else {
     loadPage(page, route);

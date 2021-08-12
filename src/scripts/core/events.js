@@ -3,12 +3,6 @@ import {throttle} from 'setjs/utility/calls.js';
 
 var documentTop = 0;
 
-eventManager.addListener(eventTypes.loaded, 'events', function() {
-  $('.js-scroll').on('scroll', function() {
-    viewUpdate(null, $(this));
-  });
-});
-
 export function viewUpdate(eventType, $el) {
   var height = $(window).height();
   var top = ($el || $(document)).scrollTop();

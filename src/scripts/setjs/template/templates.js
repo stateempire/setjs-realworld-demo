@@ -1,5 +1,5 @@
 import {fatal} from 'setjs/kernel/basics.js';
-import {funcWithSelf} from 'setjs/utility/comp-helpers.js';
+import {dataAttrFunc} from 'setjs/utility/comp-helpers.js';
 
 var templates = {};
 var doneUrls = {};
@@ -14,7 +14,7 @@ export function ensureTemplates({urls = [], success, error}) {
   urls.forEach(function(url) {
     $.get(url)
       .done(function(templateStr) {
-        loadTemplates(templateStr);
+        !doneUrls[url] && loadTemplates(templateStr);
         doneUrls[url] = true;
         if (++done == urls.length) {
           success();
@@ -28,11 +28,8 @@ function extractListHtml($list) {
   var listHtml = $list.html();
   var config = $list.data('list');
   let tName = config.t;
-  if (!tName) {
+  if (!tName && !config.tf) {
     tName = 't_' + tId++;
-    if ($list.children().length != 1) {
-      fatal('data-list must have one child', config);
-    }
     templates[tName] = listHtml;
   }
   $list.attr('data-tname', tName).empty();
@@ -59,7 +56,7 @@ function processList($parent) {
 
 export function loadTemplates(templateStr) {
   var $html = $(templateStr);
-  funcWithSelf($html, 'template', function($item, name) {
+  dataAttrFunc($html, 'template', function($item, name) {
     if (templates[name]) {
       fatal('Template exists', name);
     }

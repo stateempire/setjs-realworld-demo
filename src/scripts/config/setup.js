@@ -1,5 +1,4 @@
 var setup = {
-  ssr: function() {},
   templateUrls: function(urls) {
     return urls.map(x => '/templates/' + x + '.html?t=' + setup.timestamp());
   },

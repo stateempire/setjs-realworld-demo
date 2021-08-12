@@ -3,7 +3,7 @@ import {addFuncs} from 'core/acts-funcs.js';
 
 addFuncs({
   moment: function(time, {$el}, format) {
-    format = format || 'MMMM Do, YYYY.';
+    format = format || 'MMM D, YYYY';
     $el.text((time && time._isAMomentObject ? time : moment(time)).format(format));
   },
   fromNow: function(time, {$el}) {

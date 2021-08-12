@@ -10,6 +10,10 @@ export function getPropDef(propPath, data) {
   return getProp(propPath, data, defData);
 }
 
+export function getDefData(name) {
+  return defData['@' + name];
+}
+
 export function setDefData(name, val) {
   defData['@' + name] = val;
 }

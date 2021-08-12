@@ -76,8 +76,8 @@ export function obtain(list, value, prop1, prop2, prop3) {
   }
 }
 
-export function getVal(list, value, prop) {
-  var result = obtain(list, value, prop);
+export function getVal(list, value, ...props) {
+  var result = obtain(list, value, ...props);
   return result && result.val;
 }
 

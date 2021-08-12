@@ -87,6 +87,9 @@ function createBindings(bindingStr, rdata, isIf) {
   function pushFunc(list, statement) {
     var funcName = statement.v;
     funcBinding = {f: rdata[funcName] || func(funcName)};
+    if (typeof funcBinding.f != 'function') {
+      fatal(funcName + ' is not a function', bindingStr, rdata);
+    }
     list.push(funcBinding);
   }
 }

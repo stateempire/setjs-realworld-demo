@@ -28,11 +28,8 @@ export default function(opts) {
       alertComp.update();
       isBusy = 0;
     },
-    close: function(stopLoading) {
+    close: function() {
       lightbox.destroy();
-      if (stopLoading) {
-        $('body').removeClass('loading');
-      }
     }
   };
   return controller;

@@ -1,5 +1,5 @@
 import {initSetjs, setRoute} from 'setjs/kernel/setjs.js';
-import {funcWithSelf} from 'setjs/utility/comp-helpers.js';
+import {dataAttrFunc} from 'setjs/utility/comp-helpers.js';
 import langHelper from 'setjs/kernel/lang-helper.js';
 import handleRoute from 'core/route-manager.js';
 
@@ -15,7 +15,7 @@ function getLink(subRoute) {
 }
 
 function compUpdate($selection) {
-  funcWithSelf($selection, 'href', function($link) {
+  dataAttrFunc($selection, 'href', function($link) {
     let dHref = $link.attr('data-href');
     if ($link.data('dHref') != dHref && !$link.closest('[data-no-links]').length) {
       if ($link.attr('target') != '_blank') {

@@ -7,11 +7,11 @@ addFuncs({
   h: function (val, opts) {
     opts.$el.html(val);
   },
-  gt: function(val, opts, other) {
-    return val > other;
+  gt: function(val, opts, other, add) {
+    return val > (+other + (+add || 0));
   },
-  lt: function(val, opts, other) {
-    return val < other;
+  lt: function(val, opts, other, add) {
+    return val < (+other + (+add || 0));
   },
   plurify: function(number, {$el}, singular, plural) {
     plural = plural || singular + 's';

@@ -11,7 +11,7 @@ export function getConfigTemplate(callerName, config, tId) {
     fatal('Invalid data-' + callerName, config);
   }
   $.each(config.vars, function(name, val) {
-    templateStr = templateStr.replace(RegExp('{' + name + '}', 'g'), val);
+    templateStr = templateStr.replace(RegExp('{(o:)?' + name + '}', 'g'), val);
   });
   $.each(config.subs, function(name, val) {
     templateStr = templateStr.replace(RegExp(name, 'g'), val);

@@ -35,8 +35,8 @@ function loadContent($content, loaded) {
          .css(bodyCss);
     bodyCls = $content.data('class');
     bodyStyle = bodyCss;
-    $content.find('[data-focus="true"]').focus();
     loaded && loaded();
+    $content.find('[data-focus="true"]').focus();
   }, Math.max(0, animDuration - (Date.now() - blankTime)));
 }
 

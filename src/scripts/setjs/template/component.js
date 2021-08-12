@@ -2,19 +2,24 @@ import {fatal} from 'setjs/kernel/basics.js';
 import setjs from 'setjs/kernel/setjs.js';
 import {applyBindings, processIf, applyWatch, cleanupWatch} from 'setjs/template/binding.js';
 import {bindEvents} from 'setjs/template/events.js';
-import {storeItemByName, findWithSelf, funcWithSelf} from 'setjs/utility/comp-helpers.js';
+import {storeItemByName, dataAttrFind, dataAttrFunc} from 'setjs/utility/comp-helpers.js';
 import {configData, getConfigTemplate, tmpStr} from 'setjs/template/template-config.js';
 import {getTemplate} from 'setjs/template/templates.js';
+import {func} from 'core/acts-funcs.js';
 
 function processSlot($item, comp, data, slotConfig, forceReplace) {
   let slotComp = createComponent(getConfigTemplate('slot', slotConfig), configData(slotConfig, data), comp.actions, comp);
-  let name = slotConfig.name || $item.data('name');
-  slotComp.$root.data('slotConfig', slotConfig);
-  name && storeItemByName(comp, name, slotComp);
-  if (slotConfig.replace || forceReplace) {
-    $item.replaceWith(slotComp.$root);
-  } else {
-    $item.append(slotComp.$root);
+  $item.empty();
+  if (slotComp) {
+    slotComp.$root.data('slotConfig', slotConfig);
+    storeItemByName(comp, slotConfig.name || $item.data('name'), slotComp);
+    if (slotConfig.replace || forceReplace) {
+      $item.replaceWith(slotComp.$root);
+    } else {
+      $item.append(slotComp.$root);
+    }
+  } else if (slotConfig.replace) {
+    $item.remove();
   }
 }
 
@@ -25,7 +30,24 @@ function renderList(comp, data, listData) {
   var list = listData.list = [];
   var rd = comp.rComp && comp.rComp.data || data;
   listData.$el.empty();
-  $.each(configData(config, data), function(key, val) {
+  $.each(configData(config, data), appendItem);
+  if (!list.length && (config.alt || config.sub)) {
+    listData.$el.append(createComponent(getTemplate(config.alt, config.sub), $.extend({rd, pd: data}, listData), comp.actions, comp).$root);
+  }
+  listData.$elements = listData.$el.children();
+  oldList && oldList.forEach(comp => {
+    cleanupWatch(comp.data);
+  });
+  if (listData.name) {
+    listData.append = function(items) {
+      $.each(items, function(key, val) {
+        appendItem(key, val, 1);
+      });
+      listData.$elements = listData.$el.children();
+    };
+  }
+
+  function appendItem(key, val, compUpdate) {
     var itemData = {
       [listData.d]: index,
       [listData.i]: ++index,
@@ -35,25 +57,20 @@ function renderList(comp, data, listData) {
       pd: data,
       rd: rd,
     };
-    var itemComp = createComponent(listData.t, itemData, comp.actions, comp);
-    listData.$el.append(itemComp.$root);
-    list.push(itemComp);
-  });
-  if (!list.length && (config.alt || config.sub)) {
-    listData.$el.append(createComponent(getTemplate(config.alt, config.sub), $.extend({rd, pd: data}, listData), comp.actions, comp).$root);
+    var itemComp = createComponent((config.tf && (rd[config.tf] || func(config.tf))(itemData, comp, listData)) || listData.t, itemData, comp.actions, comp);
+    if (itemComp) {
+      listData.$el.append(itemComp.$root);
+      list.push(itemComp);
+      compUpdate && setjs.compUpdate(itemComp.$root);
+    }
   }
-  listData.$elements = listData.$el.children();
-  oldList && oldList.forEach(comp => {
-    cleanupWatch(comp.data);
-  });
 }
 
 function createList($el, comp, data) {
   var config = $el.data('list');
-  var template = getConfigTemplate('list', config, $el.data('tname'));
-  var listData = $.extend({$el, c: config, t: template, i: 'index', k: 'key', v: 'val', d: 'dex'}, config.vars);
-  var name = config.name || $el.data('name');
-  name && storeItemByName(comp, name, listData);
+  var template = $el.data('tname') && getConfigTemplate('list', config, $el.data('tname'));
+  var listData = $.extend({name: config.name || $el.data('name'), $el, c: config, t: template, i: 'index', k: 'key', v: 'val', d: 'dex'}, config.vars);
+  storeItemByName(comp, listData.name, listData);
   renderList(comp, data, listData);
 }
 
@@ -66,15 +83,11 @@ function createList($el, comp, data) {
  * @return {Object} returns the compiled template
  */
 function createComponent(templateStr, data, actions, pComp) {
-  var $root, $watchElements, $bindingElements, $actElements, $listElements, comp;
+  var $root, tmpRoot, $watchElements, $bindingElements, $actElements, $listElements, comp;
   data = data || {};
   actions = actions || {};
   $root = $(tmpStr(templateStr, data));
-  if ($root.data('if')) {
-    fatal('data-if at root', templateStr);
-  }
   comp = {
-    $root,
     data,
     actions,
     rComp: pComp && pComp.rComp || pComp,
@@ -94,6 +107,7 @@ function createComponent(templateStr, data, actions, pComp) {
         delete comp[name];
         processSlot(slotComp.$root, comp, data, slotComp.$root.data('slotConfig'), 1);
         setjs.compUpdate(comp[name].$root);
+        cleanupWatch(slotComp.data);
       }
     },
     renderList: function() {
@@ -104,28 +118,39 @@ function createComponent(templateStr, data, actions, pComp) {
         }
       });
   }};
-  funcWithSelf($root, 'if', function($item, dataIf) {
+  if ($root.length > 1) {
+    tmpRoot = 1;
+    $root = $('<div>').append($root);
+  }
+  dataAttrFunc($root, 'if', function($item, dataIf) {
     processIf($item, comp, data, dataIf);
   });
-  funcWithSelf($root, 'src', function($item, src) {
+  if (tmpRoot) {
+    $root = $root.children();
+  }
+  if (!$root.length) {
+    return;
+  }
+  dataAttrFunc($root, 'src', function($item, src) {
     $item.attr('src', src);
   });
-  funcWithSelf($root, 'val', function($item, val) {
+  dataAttrFunc($root, 'val', function($item, val) {
     $item.attr('value', val);
   });
-  $watchElements = findWithSelf($root, 'watch');
-  $bindingElements = findWithSelf($root, 'bind');
-  $actElements = findWithSelf($root, 'act');
-  $listElements = findWithSelf($root, 'list');
-  funcWithSelf($root, 'name', function($item, name) {
+  comp.$root = $root.data('comp', comp);
+  $watchElements = dataAttrFind($root, 'watch');
+  $bindingElements = dataAttrFind($root, 'bind');
+  $actElements = dataAttrFind($root, 'act');
+  $listElements = dataAttrFind($root, 'list');
+  dataAttrFunc($root, 'name', function($item, name) {
     name = '$' + name;
     if (comp[name]) {
       fatal('Repeat name', name);
     }
     comp[name] = $item;
   });
-  // You cannot call funcWithSelf() after this, as this might add items which can affect the selection
-  funcWithSelf($root, 'slot', function($item, slotConfig) {
+  // You cannot call dataAttrFunc() after this, as this might add items which can affect the selection
+  dataAttrFunc($root, 'slot', function($item, slotConfig) {
     processSlot($item, comp, data, slotConfig);
   });
   $listElements.each(function(i, item) {
@@ -140,8 +165,7 @@ function createComponent(templateStr, data, actions, pComp) {
   $actElements.each(function(i, item) {
     bindEvents($(item), comp, data, actions);
   });
-  $root.data('comp', comp);
-  !pComp && setjs.compUpdate(comp.$root);
+  !pComp && setjs.compUpdate($root);
   return comp;
 }
 

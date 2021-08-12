@@ -65,8 +65,8 @@ export function batchCall({success, error, progress}) {
           done++;
           if (item.key) {
             result[item.key] = item.prop ? getProp(item.prop, res) : res;
-            item.opts && item.opts.success && item.opts.success(res);
           }
+          item.opts && item.opts.success && item.opts.success(res);
           if (error != 1 && progress) {
             progress({done, rem: calls.length - done, percent: Math.round(100 * done / calls.length)});
           }

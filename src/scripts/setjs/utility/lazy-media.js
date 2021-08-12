@@ -55,6 +55,7 @@ function loadFullMedia(item, height) {
 
   function mediaLoaded() {
     $el.addClass('loaded');
+    item.loaded && item.loaded();
   }
 
   function videoCallback() {

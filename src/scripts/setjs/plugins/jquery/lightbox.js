@@ -1,20 +1,18 @@
 import eventManager, {eventTypes} from 'setjs/kernel/event-manager.js';
 import {closeCls} from 'config/app-config.js';
+import {viewUpdate} from 'core/events.js';
 
 eventManager.addListener(eventTypes.route, 'lightbox', function() {
-  $('.lightbox').remove();
+  $('.lightbox, .sidebar').remove();
   $(document).off('keydown.lightbox');
-  $('body').removeClass('lightbox-open');
+  $('body').removeClass('lightbox-open sidebar-open');
 });
 
 $.fn.lightbox = function (opts = {}) {
   var mode = opts.mode || 'lightbox';
   var delay = opts.delay || (mode == 'sidebar' ? 320 : 20);
-  var $lightbox = $(`<div class="${mode}"></div>`).appendTo('body');
-  // var $inner = $('<div class="inner">').appendTo($lightbox);
-  // var $btnParent = opts.inner ? $inner : $lightbox;
+  var $lightbox = $(`<div class="${mode} ${opts.cls || ''}"></div>`).appendTo('body');
   var $btnParent = $lightbox;
-  // var lightbox = {opts, $lightbox, $inner, destroy, close, replaceContent};
   var lightbox = {opts, $lightbox, destroy, close, replaceContent};
   var openCls = `${mode}-open`;
   var openingCls = openCls + 'ing';
@@ -34,6 +32,7 @@ $.fn.lightbox = function (opts = {}) {
         $('body').removeClass(openCls).removeClass(closingCls);
         $lightbox.remove();
         done && done();
+        viewUpdate();
       }, delay);
     }
   }
@@ -48,8 +47,8 @@ $.fn.lightbox = function (opts = {}) {
   function initCarousel() {
     if (opts.carousel) {
       if (!opts.carousel.noBtns) {
-        opts.carousel.$left = opts.carousel.$left || $('<div class="nav-left"></div>').appendTo($btnParent);
-        opts.carousel.$right = opts.carousel.$right || $('<div class="nav-right"></div>').appendTo($btnParent);
+        opts.carousel.$left = opts.carousel.$left || $('<div class="nav-left" data-icon="H"></div>').appendTo($btnParent);
+        opts.carousel.$right = opts.carousel.$right || $('<div class="nav-right" data-icon="I"></div>').appendTo($btnParent);
       }
       lightbox.carousel = (opts.carousel.$el || $lightbox).carousel(opts.carousel).data('carousel');
     }
@@ -74,6 +73,7 @@ $.fn.lightbox = function (opts = {}) {
   setTimeout(function(){
     $('body').addClass(openCls).removeClass(openingCls);
     opts.created && opts.created(lightbox);
+    viewUpdate();
   }, delay);
   return this.data('lightbox', lightbox);
 

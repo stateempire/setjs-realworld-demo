@@ -34,6 +34,11 @@ export function formatNumber(x) {
   return x.toString().replace(/,/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 }
 
+// https://stackoverflow.com/a/39466341/2211098
+export function nth(n){
+  return n + (['st','nd','rd'][(n/10 % 10^1 && n%10) - 1] || 'th');
+}
+
 // var alphabet = '0123456789';
 
 // for (var i = 65; i < 91; i++) {

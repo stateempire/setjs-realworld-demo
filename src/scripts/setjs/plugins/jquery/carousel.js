@@ -76,7 +76,7 @@ $.fn.carousel = function (opts) {
     });
   }
 
-  this.swipe && this.swipe({
+  this.swipe && !opts.noSwipe && this.swipe({
     move: function(x, y) {
       opts.move && opts.move(carousel, x, y);
     },

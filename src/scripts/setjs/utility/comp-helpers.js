@@ -1,20 +1,22 @@
 import {fatal} from 'setjs/kernel/basics.js';
 
 export function storeItemByName(comp, name, item) {
-  if (comp[name]) {
-    fatal('Repeat name', name);
+  if (name) {
+    if (comp[name]) {
+      fatal('Repeat name', name);
+    }
+    comp[name] = item;
   }
-  comp[name] = item;
 }
 
-export function funcWithSelf($el, dataName, func) {
-  findWithSelf($el, dataName).each(function(i, item) {
+export function dataAttrFunc($el, dataName, func, excludeSelf) {
+  dataAttrFind($el, dataName, excludeSelf).each(function(i, item) {
     var $item = $(item);
     func($item, $item.data(dataName));
   });
 }
 
-export function findWithSelf($el, dataName) {
+export function dataAttrFind($el, dataName, excludeSelf) {
   dataName = '[data-' + dataName + ']';
-  return $el.find(dataName).addBack(dataName);
+  return excludeSelf ? $el.find(dataName) : $el.find(dataName).addBack(dataName);
 }
