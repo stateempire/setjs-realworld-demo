@@ -35,13 +35,13 @@ $.fn.slider = function({duration, spring}) {
       });
     }
     moved = 0;
+  }
 
-    function snap(newIndex) {
-      let position = slideWidth * -newIndex;
-      animate(position, duration);
-      index = newIndex;
-      startX = position;
-    }
+  function snap(newIndex) {
+    let position = first.getBoundingClientRect().width * -newIndex;
+    animate(position, duration);
+    index = newIndex;
+    startX = position;
   }
 
   function animate(position, time) {
@@ -60,6 +60,9 @@ $.fn.slider = function({duration, spring}) {
     },
     reset: function() {
       animate(first.getBoundingClientRect().width * -index, duration);
+    },
+    next: function() {
+      snap(index == $slides.length - 1 ? 0 : index + 1);
     },
   });
 };

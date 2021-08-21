@@ -12,13 +12,21 @@ $.fn.miniCarousel = function() {
   var $carousel = $el.find('.carousel');
   var slider = $carousel.data('slider');
   var opts = $el.data('carousel');
-  if (!opts.duration) {
-    throw {msg: 'data-carousel object required', opts};
-  }
   if (!slider) {
+    opts = $.extend({duration: 750, spring: 0.25}, typeof opts == 'object' ? opts : 0);
     slider = $carousel.slider(opts).data('slider');
     $el.find('.left, .right').on('click', function() {
       slider.move($(this).hasClass('left') ? -1 : 1);
     });
+    if (opts.time > 0) {
+      setTimeout(next, opts.time * 1000);
+    }
+  }
+
+  function next() {
+    if ($carousel.data('slider')) { // to stop autoplay when $carousel is removed from DOM
+      slider.next();
+      setTimeout(next, opts.time * 1000);
+    }
   }
 };

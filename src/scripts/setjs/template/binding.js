@@ -159,6 +159,7 @@ export function processIf($el, comp, data, dataIf) {
     $el.nextUntil(':not([data-elif])').remove();
     $el.next('[data-else]').remove();
   }
+  return remove;
 }
 
 function runBinding(binding, opts) {

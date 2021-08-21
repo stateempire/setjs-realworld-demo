@@ -121,10 +121,12 @@ function createComponent(templateStr, data, actions, pComp) {
   if ($root.length > 1) {
     tmpRoot = 1;
     $root = $('<div>').append($root);
+  } else if ($root.data('if') && processIf($root, comp, data, $root.data('if'))) {
+    return;
   }
   dataAttrFunc($root, 'if', function($item, dataIf) {
     processIf($item, comp, data, dataIf);
-  });
+  }, 1);
   if (tmpRoot) {
     $root = $root.children();
   }
@@ -156,11 +158,11 @@ function createComponent(templateStr, data, actions, pComp) {
   $listElements.each(function(i, item) {
     createList($(item), comp, data);
   });
-  $watchElements.each(function(i, item) {
-    applyWatch($(item), comp, data);
-  });
   $bindingElements.each(function(i, item) {
     applyBindings($(item), comp, data);
+  });
+  $watchElements.each(function(i, item) {
+    applyWatch($(item), comp, data);
   });
   $actElements.each(function(i, item) {
     bindEvents($(item), comp, data, actions);
