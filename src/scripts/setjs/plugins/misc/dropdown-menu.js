@@ -14,7 +14,7 @@ eventManager.addListener(eventTypes.init, 'drop-menu', function() {
 
       $('.dropdown.open').not($menu).removeClass('open');
       $('body').toggleClass('dropdown', $menu.hasClass('open'));
-      return $menu && false;
+      return !$menu.length;
     } else {
       $('.dropdown.open').removeClass('open');
       $('body').removeClass('dropdown');
