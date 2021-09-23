@@ -118,19 +118,20 @@ export function loadJSCSS(urls, success, errorCb) {
 export function loadAssets({urlSets, success, error, errMsg}) {
   var done = 0;
   if (testArray(urlSets, success)) {
-    urlSets.forEach(function(urls) {
-      loadJSCSS(urls, function() {
+    loadNext();
+    function loadNext() {
+      let next = urlSets[done];
+      loadJSCSS(next, function() {
         done++;
         if (done == urlSets.length) {
           success();
+        } else {
+          loadNext();
         }
       }, function() {
-        if (error) {
-          error(errMsg);
-          error = 0;
-        }
+        error(errMsg);
       });
-    });
+    };
   }
 }
 
