@@ -119,19 +119,20 @@ export function loadAssets({urlSets, success, error, errMsg}) {
   var done = 0;
   if (testArray(urlSets, success)) {
     loadNext();
-    function loadNext() {
-      let next = urlSets[done];
-      loadJSCSS(next, function() {
-        done++;
-        if (done == urlSets.length) {
-          success();
-        } else {
-          loadNext();
-        }
-      }, function() {
-        error(errMsg);
-      });
-    };
+  }
+
+  function loadNext() {
+    let next = urlSets[done];
+    loadJSCSS(next, function() {
+      done++;
+      if (done == urlSets.length) {
+        success();
+      } else {
+        loadNext();
+      }
+    }, function() {
+      error(errMsg);
+    });
   }
 }
 
