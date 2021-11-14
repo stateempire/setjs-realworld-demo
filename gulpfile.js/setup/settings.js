@@ -6,7 +6,6 @@ var settings = {
   routerName: 'history',
   loader: 'progress-bar',
   timestamp: Date.now(),
-  is_ssr: process.argv.join().indexOf('--mode=ssr') > 0,
 };
 
 var yamlConfig = yaml.load(fs.readFileSync('./config.yml', 'utf8'));
@@ -16,7 +15,7 @@ Object.assign(settings, currentConfig, getLocalConfig());
 function getLocalConfig() {
   try {
     let local = yaml.load(fs.readFileSync('./_local.yml', 'utf8'));
-    Object.assign(local , local [env.current.name]);
+    Object.assign(local, local[env.current.name]);
     console.log('_local.yml', local);
     return local;
   } catch (e) {

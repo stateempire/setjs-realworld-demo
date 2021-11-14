@@ -59,7 +59,7 @@ $.fn.slider = function({duration, spring}) {
       swipe({movedX, diffX: 0, speed: 1});
     },
     reset: function() {
-      animate(first.getBoundingClientRect().width * -index, duration);
+      first && animate(first.getBoundingClientRect().width * -index, duration);
     },
     next: function() {
       snap(index == $slides.length - 1 ? 0 : index + 1);

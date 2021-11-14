@@ -1,4 +1,3 @@
-var dloc = document.location;
 var baseRouteHandler;
 
 function processRoute() {
@@ -6,7 +5,7 @@ function processRoute() {
 }
 
 function getPath() {
-  return dloc.pathname.replace(/^(\/)/, '');
+  return document.location.pathname.replace(/^(\/)/, '');
 }
 
 export default {

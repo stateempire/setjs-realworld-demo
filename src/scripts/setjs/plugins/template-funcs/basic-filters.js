@@ -8,6 +8,9 @@ function number(val) {
 addFuncs({
   slugify,
   capitalize,
+  lowercase: function(str) {
+    return str.toLowerCase();
+  },
   number: function(val, opts, def) {
     return number(val == undefined ? def : val);
   },

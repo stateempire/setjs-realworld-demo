@@ -1,6 +1,6 @@
 import {setRoute} from 'setjs/kernel/setjs.js';
 import {addAction, addFuncs} from 'core/acts-funcs.js';
-import marked from 'marked';
+import {marked} from 'marked';
 import {api} from 'core/api-helper.js';
 
 addFuncs({

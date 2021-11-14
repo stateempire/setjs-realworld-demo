@@ -22,7 +22,7 @@ var wpConfig = {
   mode: env.current.mode,// https://webpack.js.org/concepts/mode/
   resolve: {
     alias: {
-      Loader: `plugins/loaders/${settings.is_ssr ? 'ssr-loader' : settings.loader}`,
+      Loader: `plugins/loaders/${settings.loader}`,
       Router: `setjs/router/${settings.routerName}-router`,
       Tests: `app/tests/${env.current.mode}`,
     },
