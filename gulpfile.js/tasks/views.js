@@ -3,6 +3,7 @@ var gulp = require('gulp');
 var fileinclude = require('gulp-file-include');
 var replace = require('gulp-replace');
 var plumber = require('gulp-plumber');
+var htmlmin = require('gulp-html-minifier-terser');
 var {paths, settings} = require('../setup.js');
 
 function htmlViews() {
@@ -18,6 +19,7 @@ function htmlViews() {
       }
       return match;
     }))
+    .pipe(htmlmin({ collapseWhitespace: true }))
     .pipe(gulp.dest(paths.dest.base));
 }
 
