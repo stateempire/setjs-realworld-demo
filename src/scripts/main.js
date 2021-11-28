@@ -1,6 +1,6 @@
 import {startApp} from 'setjs/kernel/setjs.js';
 import setup from 'config/setup.js';
-import langHelper from 'setjs/kernel/lang-helper.js';
+import langHelper from 'LangHelper';
 import initAppData from 'core/app-data.js';
 import storage from 'setjs/kernel/storage.js';
 import pageLoader from 'setjs/kernel/page-loader.js';
@@ -13,8 +13,8 @@ import appAssets from 'bootstrap/app-assets.js';
 import 'bootstrap/plugin-init.js';
 import 'bootstrap/component-init.js';
 
-export function start(settings) {
-  setup.init(settings);
+$(function() {
+  setup.init(APP_SETTINGS);
   storage.init();
   langHelper.init();
   loadTemplates($('#init-error').html());
@@ -32,4 +32,4 @@ export function start(settings) {
   .add(initAppData)
   .add(langHelper.initData)
   .go();
-}
+});

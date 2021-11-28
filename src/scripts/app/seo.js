@@ -1,5 +1,5 @@
 import eventManager, {eventTypes} from 'setjs/kernel/event-manager.js';
-import langHelper from 'setjs/kernel/lang-helper.js';
+import langHelper from 'LangHelper';
 import router from 'Router';
 import setup from 'config/setup.js';
 

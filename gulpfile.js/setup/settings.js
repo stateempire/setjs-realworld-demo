@@ -5,12 +5,16 @@ var env = require('./environment.js');
 var settings = {
   routerName: 'history',
   loader: 'progress-bar',
-  timestamp: Date.now(),
+  reloadYml: load,
 };
 
-var yamlConfig = yaml.load(fs.readFileSync('./config.yml', 'utf8'));
-var currentConfig = Object.assign(yamlConfig, yamlConfig[env.current.name]);
-Object.assign(settings, currentConfig, getLocalConfig());
+function load(cb) {
+  var yamlConfig = yaml.load(fs.readFileSync('./config.yml', 'utf8'));
+  var currentConfig = Object.assign(yamlConfig, yamlConfig[env.current.name]);
+  Object.assign(settings, currentConfig, getLocalConfig());
+  settings.timestamp = Date.now();
+  cb && cb();
+}
 
 function getLocalConfig() {
   try {
@@ -23,4 +27,5 @@ function getLocalConfig() {
   }
 }
 
+load();
 module.exports = settings;

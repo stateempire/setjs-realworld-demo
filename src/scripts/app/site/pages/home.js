@@ -1,11 +1,17 @@
 import getComp from 'setjs/template/component.js';
 import {api} from 'core/api-helper.js';
+import {cascadeRoleFlag} from 'setjs/kernel/roles.js';
 import {createPages} from 'helpers/site-helpers.js';
 import {articleLimit} from 'config/app-config.js';
 import {getQs, makeQs} from 'setjs/utility/browser.js';
 
 export default {
   templates: ['site/home'],
+  getRole: function(route) {
+    if (route.pageId == 'my-feed') {
+      return cascadeRoleFlag('public');
+    }
+  },
   preload: function(opts) {
     opts.feed = opts.route.pageId == 'my-feed';
     opts.query = makeQs({

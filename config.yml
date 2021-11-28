@@ -6,6 +6,9 @@ email: help@stateempire.com
 # aws_vars: export $(cat .aws-vars | xargs)
 loader: progress-bar
 api_url: https://conduit.productionready.io/api/
+app_settings: >
+  api_url: '@replace{api_url}',
+  timestamp: @replace{timestamp}
 local:
   environment: local
   site_port: 60002

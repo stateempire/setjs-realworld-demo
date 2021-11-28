@@ -33,13 +33,5 @@
         window.jQuery || document.write("<script src=\"/vendor/js/jquery-3.4.1.min.js\"><\/script>")
     </script>
     <script src="/scripts/bundle.js?v=@replace{timestamp}"></script>
-    <script>
-        window.setjsApp.start({
-          dataFile: 'en',
-          languages: [],
-          api_url: '@replace{api_url}',
-          timestamp: @replace{timestamp},
-        });
-    </script>
 </body>
 </html>

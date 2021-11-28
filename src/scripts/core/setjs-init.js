@@ -1,6 +1,6 @@
 import {initSetjs, setRoute} from 'setjs/kernel/setjs.js';
 import {dataAttrFunc} from 'setjs/utility/comp-helpers.js';
-import langHelper from 'setjs/kernel/lang-helper.js';
+import langHelper from 'LangHelper';
 import handleRoute from 'core/route-manager.js';
 
 var lastLinkClick = 0;
