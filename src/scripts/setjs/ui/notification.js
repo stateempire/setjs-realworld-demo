@@ -8,7 +8,7 @@ export default function notification(msgObj, cls, sticky) {
       setTimeout(function() {
         $notification.removeClass(cls);
       }, 400);
-    }, 4000);
+    }, 8000);
   }
 }
 
