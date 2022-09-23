@@ -11,6 +11,9 @@
    "globals": {
      "DocumentTouch": true,
      "$": true,
+     "$win": true,
+     "$doc": true,
+     "$body": true,
      "APP_SETTINGS": true
    },
    "rules": {
